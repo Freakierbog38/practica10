@@ -36,7 +36,7 @@
   <div class="login-box-body">
     <p class="login-box-msg">Registrate para iniciar sesión</p>
 
-    <form action="../../index2.html" method="POST">
+    <form action="#" method="POST">
       <div class="form-group has-feedback">
         <input type="email" name="emailLogin" class="form-control" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

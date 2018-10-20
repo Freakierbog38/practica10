@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2018 at 05:36 AM
+-- Generation Time: Oct 20, 2018 at 09:39 PM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -52,6 +52,19 @@ CREATE TABLE `alumno` (
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `alumnofull`
+-- (See below for the actual view)
+--
+CREATE TABLE `alumnofull` (
+`matricula` varchar(10)
+,`nombre` varchar(255)
+,`carrera` varchar(255)
+,`tutor` varchar(128)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `carrera`
 --
 
@@ -86,6 +99,39 @@ CREATE TABLE `profesor` (
   `carrera` int(11) DEFAULT NULL,
   `correo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `profull`
+-- (See below for the actual view)
+--
+CREATE TABLE `profull` (
+`numero` int(11)
+,`nombre` varchar(128)
+,`carrera` varchar(255)
+,`correo` varchar(255)
+,`password` varchar(128)
+,`rol` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `alumnofull`
+--
+DROP TABLE IF EXISTS `alumnofull`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `alumnofull`  AS  select `a`.`matricula` AS `matricula`,`a`.`nombre` AS `nombre`,`c`.`nombre` AS `carrera`,`p`.`nombre` AS `tutor` from ((`alumno` `a` join `carrera` `c`) join `profesor` `p`) where ((`a`.`carrera` = `c`.`id`) and (`p`.`numero` = `a`.`tutor`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `profull`
+--
+DROP TABLE IF EXISTS `profull`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `profull`  AS  select `p`.`numero` AS `numero`,`p`.`nombre` AS `nombre`,`c`.`nombre` AS `carrera`,`l`.`correo` AS `correo`,`l`.`password` AS `password`,`l`.`rol` AS `rol` from ((`profesor` `p` join `carrera` `c`) join `login` `l`) where ((`c`.`id` = `p`.`carrera`) and (`l`.`user` = `p`.`correo`)) ;
 
 --
 -- Indexes for dumped tables
