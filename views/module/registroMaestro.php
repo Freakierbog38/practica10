@@ -7,7 +7,6 @@
           <br> Formulario de Registro <br>
         </h1>
       </div>
-      <br> <br>
       <ol class="breadcrumb">
         <li><a href="#"> Registro </a></li>
         <li class="active"></li>
@@ -17,14 +16,8 @@
       <!-- Main row -->
       <div class="row"> <!--COLUMNA 2-->
         <!-- Left col -->
-        <!--*************************************************************************************************************-->
-        <!--*************************************************************************************************************-->
-        <!--*************************************************************************************************************-->
         <!--FORMULARIOOOO-->
-        <!--*************************************************************************************************************-->
-        <!--*************************************************************************************************************-->
         <section class="col-lg-10 col-md-offset-1">
-          
           <!-- FORMULARIO -->
           <div class="box box-info">
             <div class="box-header">
@@ -34,44 +27,73 @@
               <!-- /. tools -->
             </div>
             <div class="box-body">
-              <form action="#" method="post">
+              <form method="POST" enctype="multipart/form-data">
+                
                 <div class="form-group">
-                  <label>No Empleado: </label>
-                 <input type="text" class="form-control" name="matricula" placeholder="Ej. 1530123">
+                  <label for="carreraRegistro">Carrera: </label><br>
+                  <select name="carreraRegistro" class="form-control">
+                    <?php 
+                    $r = Datos::allFromTable("carrera");
+                    foreach ($r as $dato): ?>
+                      <option value=<?php echo $dato['id'] ?>> <?php echo $dato['nombre'] ?> </option>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
 
-                
                 <div class="form-group">
-                  <label>Carrera: </label>
-                 <input type="text" class="form-control" name="carrera" placeholder="Ej. Deberia ser una lista desplegable  equisdé">
-                 
+                  <label for="nombreRegistro">Nombre: </label>
+                  <input type="text" class="form-control" name="nombreRegistro" placeholder="Nombre y Apellidos" required>
                 </div>
+
                 <div class="form-group">
-                  <label>Nombre: </label>
-                 <input type="text" class="form-control" name="Nombre" placeholder="Ej. Usuario apellido">
+                  <label for="nombreRegistro">Correo: </label>
+                  <input type="email" class="form-control" name="correoRegistro" placeholder="ejemplo@email.com" required>
                 </div>
-                
-                
-                
-              </form>
-            </div>
-            <div class="box-footer clearfix">
-              <button type="button" class="pull-right btn btn-default" id="sendEmail">Send
-                <i class="fa fa-arrow-circle-right"></i></button>
+
+                <div class="form-group">
+                  <label for="nombreRegistro">Contraseña: </label>
+                  <input type="password" class="form-control" name="passwordRegistro" placeholder="Contraseña" required>
+                </div>
+
+                <div class="form-group">
+                  <input type="hidden" class="form-control" name="rolRegistro" value="2">
+                </div>
+
+                <div class="form-group">
+                  <label for="fotoRegistro">Imagen de perfil:</label>
+                  <input type="file" name="fotoRegistro" accept="image/jpeg, image/png">
+                </div>
+
+                <div class="row">
+                  <div class="col-md-offset-10 col-md-2">
+                    <input type="submit" class="btn btn-primary btn-block btn-flat" value="Registrar">
+                  </div>
+                </div>
+
+            </form>
             </div>
           </div>
-
         </section>
-        <!--*************************************************************************************************************-->
-        <!--***********************TERMINA COLUMNA 2*********************************************************************-->
-        <!--*************************************************************************************************************-->
-        <!--*************************************************************************************************************-->
-        <section class="col-lg-5 connectedSortable">
-
-         
-         <!--COLUMNA 3 NO PONER NADA:V LUEGO SE DESMADRA TODO JAJA -->
-
-    </section>
+        <!--***********************TERMINA COLUMNA ********************************************************-->
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+<?php
+    //Enviar los datos al controlador mcvcontroler (es la clase principal de controller.php)
+    $registro = new MvcController();
+
+    //se invoca la funcion registrousuariocontroller de la clase mvccontroller;
+    $registro -> registroProfesorController();
+
+    if(isset($_GET["action"])){
+      if($_GET["action"] == "okP"){
+        echo '<div class="alert alert-success alert-dismissible">';
+        echo '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>';
+        echo '<h4><i class="icon fa fa-check"></i>';
+        echo ' Alert! </h4>';
+        echo 'Profesor agregado con éxito';
+        echo '</div>';
+      }
+    }
+    
+?>

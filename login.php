@@ -34,9 +34,10 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
+    <img src="img/user.png" height="150px" width="150px" class="center-block"><br>
     <p class="login-box-msg">Registrate para iniciar sesión</p>
 
-    <form action="#" method="POST">
+    <form method="POST">
       <div class="form-group has-feedback">
         <input type="email" name="emailLogin" class="form-control" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -55,7 +56,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
+          <input type="submit" class="btn btn-primary btn-block btn-flat" value="Entrar">
         </div>
         <!-- /.col -->
       </div>
@@ -78,6 +79,20 @@
 </div>
 <!-- /.login-box -->
 
+<?php
+    //Invocamos el modelo que se utilizará en todos los archivos
+    require_once('models/enlaces.php');
+    require_once('models/crud.php');
+    require_once('controller/controller.php');
+
+    //Enviar los datos al controlador mcvcontroler (es la clase principal de controller.php)
+    $login = new MvcController();
+
+    //se invoca la funcion registrousuariocontroller de la clase mvccontroller;
+    $login -> loginController();
+    
+?>
+
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -93,5 +108,6 @@
     });
   });
 </script>
+
 </body>
 </html>

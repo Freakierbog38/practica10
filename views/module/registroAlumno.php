@@ -1,86 +1,90 @@
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
     <section class="content-header">
       <div align="center">
         <h1>
-          <br>  Formulario de Registro <br>
+          <br> Formulario de Registro <br>
         </h1>
-      </div> 
-      <br> <br>
+      </div>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> </a></li>
+        <li><a href="#"> Registro </a></li>
         <li class="active"></li>
       </ol>
     </section>
-
       <!-- Main row -->
       <div class="row"> <!--COLUMNA 2-->
         <!-- Left col -->
-        <!--*************************************************************************************************************-->
-        <!--*************************************************************************************************************-->
-        <!--*************************************************************************************************************-->
         <!--FORMULARIOOOO-->
-        <!--*************************************************************************************************************-->
-        <!--*************************************************************************************************************-->
         <section class="col-lg-10 col-md-offset-1">
-          
           <!-- FORMULARIO -->
-
           <div class="box box-info">
             <div class="box-header">
               <i class="fa fa-address-card-o" aria-hidden="true"></i>
 
               <h3 class="box-title">REGISTRAR ALUMNO</h3>
-              <!-- tools box -->
-              <div class="pull-right box-tools">
-                <!--button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
-                        title="Remove"-->
-                  <!--i class="fa fa-times"></i></button-- >
-              </div>
-              <!-- /. tools -->
+              <?php 
+              if(isset($_GET["action"])){
+                      if($_GET["action"] == "okA"){
+                          echo '<div class="alert alert-success alert-dismissible">';
+                          echo '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>';
+                          echo '<h4><i class="icon fa fa-check"></i>';
+                          echo ' Alert! </h4>';
+                          echo 'Alumno agregado con éxito';
+                          echo '</div>';
+                      }
+                  }
+              ?>
             </div>
             <div class="box-body">
-              <form action="#" method="post">
+              <form method="POST">
                 <div class="form-group">
-                  <label>Matricula: </label>
-                 <input type="text" class="form-control" name="matricula" placeholder="Ej. 1530123">
+                  <label for="matriculaRegistro">Matricula: </label>
+                 <input type="text" class="form-control" name="matriculaRegistro" placeholder="Ej. 1530123" required>
                 </div>
 
                 <div class="form-group">
-                  <label>Nombre: </label>
-                 <input type="text" class="form-control" name="Nombre" placeholder="Ej. Usuario apellido">
+                  <label for="nombreRegistro">Nombre: </label>
+                 <input type="text" class="form-control" name="nombreRegistro" placeholder="Nombre y Apellidos" required>
                 </div>
                 <div class="form-group">
-                  <label>Carrera: </label>
-                 <input type="text" class="form-control" name="carrera" placeholder="Ej. Deberia ser una lista desplegable  equisdé">
-                 
+                  <label for="carreraRegistro">Carrera: </label> <br>
+                  <select name="carreraRegistro" class="form-control">
+                    <?php 
+                    $r = Datos::allFromTable("carrera");
+                    foreach ($r as $dato): ?>
+                      <option value=<?php echo $dato['id'];?>> <?php echo $dato['nombre'] ?> </option>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
                 <div class="form-group">
-                  <label>Tutor: </label>
-                 <input type="text" class="form-control" name="tutor" placeholder="Ej. esta también">
+                  <label for="tutorRegistro">Tutor: </label><br>
+                  <select name="tutorRegistro" class="form-control">
+                    <?php 
+                    $r = Datos::allFromTable("profesor");
+                    foreach ($r as $dato): ?>
+                      <option value=<?php echo $dato['numero'] ?>> <?php echo $dato['nombre'] ?> </option>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
-                
-                
-                
+
+                <div class="row">
+                  <div class="col-md-offset-10 col-md-2">
+                    <input type="submit" class="btn btn-primary btn-block btn-flat" value="Registrar">
+                  </div>
+                </div>
+
               </form>
             </div>
-            <div class="box-footer clearfix">
-              <button type="button" class="pull-right btn btn-default" id="sendEmail">Send
-                <i class="fa fa-arrow-circle-right"></i></button>
-            </div>
           </div>
-
         </section>
-        <!--*************************************************************************************************************-->
-        <!--***********************TERMINA COLUMNA 2*********************************************************************-->
-        <!--*************************************************************************************************************-->
-        <!--*************************************************************************************************************-->
-        <!--section class="col-lg-5 connectedSortable"-->
-
-         
-         <!--COLUMNA 3 NO PONER NADA:V LUEGO SE DESMADRA TODO JAJA -->
-
+        <!--***********************TERMINA COLUMNA*****************************-->
     <!--/section-->
   </div>
     <!-- /.content -->
+<?php
+    //Enviar los datos al controlador mcvcontroler (es la clase principal de controller.php)
+    $registro = new MvcController();
+
+    //se invoca la funcion registrousuariocontroller de la clase mvccontroller;
+    $registro -> registroAlumnoController();
+?>

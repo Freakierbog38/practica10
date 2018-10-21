@@ -6,10 +6,10 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="img/<?php echo $_SESSION['usuario_foto'] ?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p><?php echo $_SESSION['usuario_nombre'] ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -29,6 +29,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <!-- TUTORIASSS -->
+        <?php if($_SESSION["usuario_rol"] == 0): ?>
         <li class="treeview">
           <a href="#">
             <span>Tutorias</span>
@@ -40,7 +41,10 @@
             <li><a href="index.php?action=registroTutor"><i class="fa fa-arrow-right"></i>Registro Tutor</a></li>
           </ul>
         </li>
+        <?php endif; ?>
+
         <!-- PROFESORESS -->
+        <?php if($_SESSION["usuario_rol"] <= 1): ?>
         <li class="treeview">
           <a href="#">
             <span>Maestros</span>
@@ -53,6 +57,8 @@
             <li><a href="index.php?action=asignarTutor"><i class="fa fa-arrow-right"></i>Asignar Alumnos</a></li>
           </ul>
         </li>
+        <?php endif; ?>
+        
         <!-- ALUMOSSS -->
         <li class="treeview">
           <a href="#">

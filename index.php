@@ -8,11 +8,18 @@ require_once('models/enlaces.php');
 require_once('models/crud.php');
 require_once('controller/controller.php');
 
+session_start();
+
 //Para poder ver el template o plantilla, se hace una peticion mediante a un controlar
 //creamos el objeto:
 $mvc = new MvcController();
 
 //Muestra la funcion "plantilla" que se encuentra en controllers/controller
-$mvc->pagina();
+if($_SESSION){
+	$mvc->pagina();
+}
+else(
+	header("Location: login.php")
+)
 
 ?>
