@@ -1,15 +1,19 @@
+<?php
+//Obtiene el id mediante metodo GET
+$id = $_GET['id'];
+
+//Pide al modelo que devuelva los datos necesarios
+$alumno = Datos::unAlumnoModel($id, "alumno");
+
+?>
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <section class="content-header">
       <div align="center">
         <h1>
-          <br> Formulario de Registro <br>
+          <br> Formulario de Edición <br>
         </h1>
       </div>
-      <ol class="breadcrumb">
-        <li><a href="#"> Registro </a></li>
-        <li class="active"></li>
-      </ol>
     </section>
       <!-- Main row -->
       <div class="row"> <!--COLUMNA 2-->
@@ -21,7 +25,7 @@
             <div class="box-header">
               <i class="fa fa-address-card-o" aria-hidden="true"></i>
 
-              <h3 class="box-title">REGISTRAR ALUMNO</h3>
+              <h3 class="box-title">EDITAR ALUMNO</h3>
               <?php 
               if(isset($_GET["action"])){
                       if($_GET["action"] == "okA"){
@@ -38,40 +42,42 @@
             <div class="box-body">
               <form method="POST">
                 <div class="form-group">
-                  <label for="matriculaRegistro">Matricula: </label>
-                 <input type="text" class="form-control" name="matriculaRegistro" placeholder="Ej. 1530123" required>
+                  <label for="matriculaEditar">Matricula: </label>
+                 <input type="text" class="form-control" name="matriculaEditar" value="<?php echo $alumno['matricula'] ?>" required>
                 </div>
 
                 <div class="form-group">
-                  <label for="nombreRegistro">Nombre: </label>
-                 <input type="text" class="form-control" name="nombreRegistro" placeholder="Nombre y Apellidos" required>
+                  <label for="nombreEditar">Nombre: </label>
+                 <input type="text" class="form-control" name="nombreEditar" value="<?php echo $alumno['nombre'] ?>" required>
                 </div>
+                
                 <div class="form-group">
-                  <label for="carreraRegistro">Carrera: </label> <br>
-                  <select name="carreraRegistro" class="form-control">
+                  <label for="carreraEditar">Carrera: </label> <br>
+                  <select name="carreraEditar" class="form-control">
                     <?php 
                     $r = Datos::allFromTable("carrera");
                     foreach ($r as $dato): ?>
-                      <option value=<?php echo $dato['id']; ?>> <?php echo $dato['nombre'] ?> </option>
+                      <option value="<?php echo $dato['id']; ?>" <?php if($dato['id'] == $alumno['carrera'])  echo "selected" ?>> <?php echo $dato['nombre'] ?> </option>
                     <?php endforeach; ?>
                   </select>
                 </div>
+
                 <div class="form-group">
-                  <label for="tutorRegistro">Tutor: </label><br>
-                  <select name="tutorRegistro" class="form-control">
+                  <label for="tutorEditar">Tutor: </label><br>
+                  <select name="tutorEditar" class="form-control">
                     <?php 
                     $r = Datos::allFromTable("profull");
                     foreach ($r as $dato):
                       if($dato['rol'] == 2){ ?>
-                        <option value=<?php echo $dato['numero'] ?>> <?php echo $dato['nombre'] ?> </option>
+                        <option value="<?php echo $dato['numero']; ?>" <?php if($dato['numero'] == $alumno['tutor'])  echo 'selected'; ?>> <?php echo $dato['nombre'] ?> </option>
                     <?php 
-                    }endforeach; ?>
+                    } endforeach; ?>
                   </select>
                 </div>
 
                 <div class="row">
                   <div class="col-md-offset-10 col-md-2">
-                    <input type="submit" class="btn btn-primary btn-block btn-flat" value="Registrar">
+                    <input type="submit" class="btn btn-primary btn-block btn-flat" value="Actualizar">
                   </div>
                 </div>
 
@@ -88,5 +94,5 @@
     $registro = new MvcController();
 
     //se invoca la funcion registrousuariocontroller de la clase mvccontroller;
-    $registro -> registroAlumnoController();
+    $registro -> editarAlumnoController();
 ?>

@@ -6,7 +6,12 @@
 		public function enlacesPaginasModel($enlacesModel){
 			if($enlacesModel == "registroAlumno" || $enlacesModel == "registroMaestro"
 				|| $enlacesModel == "registroTutor" || $enlacesModel == "asignarTutor"
-				|| $enlacesModel == "perfilProfe" || $enlacesModel == "salir"){
+				|| $enlacesModel == "perfilProfe" || $enlacesModel == "salir"
+				|| $enlacesModel == "listaAlumno" || $enlacesModel == "listaProfe"
+				|| $enlacesModel == "listaTutor" || $enlacesModel == "editarTutor"
+				|| $enlacesModel == "editarMaestro" || $enlacesModel == "editarAlumno"
+				|| $enlacesModel == "eliminarProfe" || $enlacesModel == "listaTutoria"
+				|| $enlacesModel == "registroTutoria"){
 
 				$module = "views/module/" . $enlacesModel .".php";
 			}
@@ -27,7 +32,3 @@
 
 		}
 	}
-
-
-
-?>

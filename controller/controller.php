@@ -54,16 +54,16 @@
     public function registroProfesorController(){
         if(isset($_POST["nombreRegistro"])){
             //Se extrae el nombre del archivo que se subió
-            $nombreArchivo = basename($_FILES['fotoRegistro']['name']);
+            //$nombreArchivo = basename($_FILES['fotoRegistro']['name']);
             //Del nombre se extrae la extensión
-            $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+            //$extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
             //Se checa si hubo algun archivo
-            if($extension == NULL || $extension == '')
+            //if($extension == NULL || $extension == '')
                 //Se reemplaza el nombre por la matricula conservando su extensión
-                $nombreArchivo = $nombreArchivo;
-            else
+                //$nombreArchivo = $nombreArchivo;
+            //else
                 //Si no hay nada se usa la imagen predeterminada
-                $nombreArchivo = "user.jpg";
+                $nombreArchivo = "user.png";
             //Recibe todas las variables mediante POST y las asigna a un array asociado
             $datosController = array("nombre" => $_POST["nombreRegistro"],
                                      "carrera" => $_POST["carreraRegistro"],
@@ -78,8 +78,8 @@
             //Se imprime la respuesta en la vista
             if($respuesta == "success"){
                 //Si el registro fue exitoso se mueve la imagen a la carpeta, sólo soi se envió una imagen
-                if(isset($extension))
-                    move_uploaded_file($_FILES['fotoRegistro']['tmp_name'], 'img/' . $nombreArchivo);
+                //if(isset($extension))
+                    //move_uploaded_file($_FILES['fotoRegistro']['tmp_name'], 'img/' . $nombreArchivo);
                 header("location:index.php?action=okP");
             }
             else{
@@ -91,16 +91,16 @@
     public function registroTutorController(){
         if(isset($_POST["nombreRegistro"])){
             //Se extrae el nombre del archivo que se subió
-            $nombreArchivo = basename($_FILES['fotoRegistro']['name']);
+            //$nombreArchivo = basename($_FILES['fotoRegistro']['name']);
             //Del nombre se extrae la extensión
-            $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+            //$extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
             //Se checa si hubo algun archivo
-            if($extension == NULL || $extension == '')
+            //if($extension == NULL || $extension == '')
                 //Si no hay nada se usa la imagen predeterminada
-                $nombreArchivo = "user.jpg";
-            else
+                $nombreArchivo = "user.png";
+            //else
                 //Se reemplaza el nombre por la matricula conservando su extensión
-                $nombreArchivo = $nombreArchivo;
+                //$nombreArchivo = $nombreArchivo;
             //Recibe todas las variables mediante POST y las asigna a un array asociado
             $datosController = array("nombre" => $_POST["nombreRegistro"],
                                      "correo" => $_POST["correoRegistro"],
@@ -115,13 +115,124 @@
             //Se imprime la respuesta en la vista
             if($respuesta == "success"){
                 //Si el registro fue exitoso se mueve la imagen a la carpeta, sólo soi se envió una imagen
-                if(isset($extension))
-                    move_uploaded_file($_FILES['fotoRegistro']['tmp_name'], 'img/' . $nombreArchivo);
+                //if(isset($extension))
+                    //move_uploaded_file($_FILES['fotoRegistro']['tmp_name'], 'img/' . $nombreArchivo);
                 header("location:index.php?action=okT");
             }
             else{
                 header("location:index.php");
             }
+        }
+    }
+
+    public function registroTutoriaController(){
+        if(isset($_POST["nombreRegistro"])){
+            //Recibe todas las variables mediante POST y las asigna a un array asociado
+            $datosController = array("tutor" => $_POST["tutorRegistro"],
+                                     "tipo" => $_POST["tipoRegistro"],
+                                     "alumno" => $_POST["alumnoRegistro"],
+                                     "tema" => $_POST["temaRegistro"],
+                                     "observaciones" => $_POST["obseRegistro"],
+                                     "fecha" => date("Y-m-d"),
+                                     "hora" => date("H:i:s"));
+            $respuesta = Datos::registroTutoriaModel($datosController, "tutoriaIndi");
+            if($respuesta == "success"){
+                header("location: index.php?action=listaTutoria");
+            }
+            else{
+                header("location: index.php");
+            }
+        }
+    }
+
+    public function editarTutorController($id){
+        if(isset($_POST["nombreEditar"])){
+            //Se extrae el nombre del archivo que se subió
+            //$nombreArchivo = basename($_FILES['fotoEditar']['name']);
+            //Del nombre se extrae la extensión
+            //$extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+            //Se checa si hubo algun archivo
+            //if($extension == NULL || $extension == '')
+                //Si no hay nada se usa la imagen predeterminada
+            $nombreArchivo = "user.jpg";
+            //else
+                //Se reemplaza el nombre por la matricula conservando su extensión
+                //$nombreArchivo = $nombreArchivo;
+            //Recibe todas las variables mediante POST y las asigna a un array asociado
+            $datosController = array("numero" => $id,
+                                     "nombre" => $_POST["nombreEditar"],
+                                     "correo" => $_POST["correoEditar"],
+                                     "password" => $_POST["passwordEditar"],
+                                     "carrera" => $_POST["carreraEditar"],
+                                     "rol" => $_POST["rolEditar"],
+                                     "foto" => $nombreArchivo);
+            
+            //Se le dice al modelo models/crud.php (Datos::registroUsuarioModel), que en la clase "Datos" la funcion "registrousuariomodel" reciba en sus dos parametros los valores $datosController y el nombre de la tabla a conectarnos la cual es "usuarios"
+            $respuesta = Datos::editarProfeModel($datosController, "editProfe");
+
+            //Se imprime la respuesta en la vista
+            if($respuesta == "success"){
+                //Si el registro fue exitoso se mueve la imagen a la carpeta, sólo soi se envió una imagen
+                //if(isset($extension))
+                    //move_uploaded_file($_FILES['fotoRegistro']['tmp_name'], 'img/' . $nombreArchivo);
+                header("location:index.php?action=listaTutor");
+            }
+            else{
+                header("location:index.php");
+            }
+        }
+    }
+
+    public function editarProfeController($id){
+        if(isset($_POST["nombreEditar"])){
+            //Se extrae el nombre del archivo que se subió
+            //$nombreArchivo = basename($_FILES['fotoEditar']['name']);
+            //Del nombre se extrae la extensión
+            //$extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+            //Se checa si hubo algun archivo
+            //if($extension == NULL || $extension == '')
+                //Si no hay nada se usa la imagen predeterminada
+            $nombreArchivo = "user.jpg";
+            //else
+                //Se reemplaza el nombre por la matricula conservando su extensión
+                //$nombreArchivo = $nombreArchivo;
+            //Recibe todas las variables mediante POST y las asigna a un array asociado
+            $datosController = array("numero" => $id,
+                                     "nombre" => $_POST["nombreEditar"],
+                                     "correo" => $_POST["correoEditar"],
+                                     "password" => $_POST["passwordEditar"],
+                                     "carrera" => $_POST["carreraEditar"],
+                                     "rol" => $_POST["rolEditar"],
+                                     "foto" => $nombreArchivo);
+            
+            //Se le dice al modelo models/crud.php (Datos::registroUsuarioModel), que en la clase "Datos" la funcion "registrousuariomodel" reciba en sus dos parametros los valores $datosController y el nombre de la tabla a conectarnos la cual es "usuarios"
+            $respuesta = Datos::editarProfeModel($datosController, "editProfe");
+
+            //Se imprime la respuesta en la vista
+            if($respuesta == "success"){
+                //Si el registro fue exitoso se mueve la imagen a la carpeta, sólo soi se envió una imagen
+                //if(isset($extension))
+                    //move_uploaded_file($_FILES['fotoRegistro']['tmp_name'], 'img/' . $nombreArchivo);
+                header("location:index.php?action=listaProfe");
+            }
+            else{
+                header("location:index.php");
+            }
+        }
+    }
+
+    public function editarAlumnoController(){
+        if(isset($_POST["matriculaEditar"])){
+            //Recibe todas las variables mediante POST y las asigna a un array asociado
+            $datosController = array("matricula" => $_POST["matriculaEditar"],
+                                     "nombre" => $_POST["nombreEditar"],
+                                     "carrera" => $_POST["carreraEditar"],
+                                     "tutor" => $_POST["tutorEditar"]);
+            
+            //Se le dice al modelo models/crud.php (Datos::registroUsuarioModel), que en la clase "Datos" la funcion "registrousuariomodel" reciba en sus dos parametros los valores $datosController y el nombre de la tabla a conectarnos la cual es "usuarios"
+            $respuesta = Datos::editarAlumnoModel($datosController, "alumno");
+
+            header("Location: index.php?action=listaAlumno");
         }
     }
 
@@ -155,6 +266,19 @@
         }
     }
 
-}
+    public function eliminarProfeController($id){
+        if(isset($_POST['passConf'])){
+            if($_POST['passConf'] == $_SESSION['usuario_password']){
+                $respuesta = Datos::eliminarProfeModel($id, "poProfe");
+                if($respuesta="success")
+                    header("Location: index.php?action=listaProfe");
+                else
+                    header("Location: index.php");
+            }
+            else{
+                return "Incorrecta";
+            }
+        }
+    }
 
-?>
+}
